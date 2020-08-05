@@ -162,10 +162,11 @@ class HashTable:
         prev = self.capacity
         self.capacity = [None] * new_capacity
         for entry in prev:
-            self.put(entry.key, entry.value)
-            while entry.next is not None:
-                entry = entry.next
+            if entry:
                 self.put(entry.key, entry.value)
+                while entry.next is not None:
+                    entry = entry.next
+                    self.put(entry.key, entry.value)
 
 
 
@@ -194,7 +195,7 @@ if __name__ == "__main__":
 
     # Test resizing
     old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
+    ht.resize(ht.get_num_slots() * 2)
     new_capacity = ht.get_num_slots()
 
     print(f"\nResized from {old_capacity} to {new_capacity}.\n")
